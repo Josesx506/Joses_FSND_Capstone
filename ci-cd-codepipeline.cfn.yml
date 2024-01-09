@@ -563,6 +563,6 @@ Outputs:
   CodeBuildSecurityGroupId:
     Description: "ID of the CodeBuild Security Group"
     Value: !Ref CodeBuildSecurityGroup
-  CodeBuildSecurityGroupName:
-    Description: "Name of the CodeBuild Security Group"
-    Value: !GetAtt CodeBuildSecurityGroup.GroupName
+  # CodeBuildSecurityGroupName:
+  #   Description: "Name of the CodeBuild Security Group"
+  #   Value: !GetAtt CodeBuildSecurityGroup.GroupName
