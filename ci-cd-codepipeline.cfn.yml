@@ -49,6 +49,11 @@ Parameters:
     MaxLength: 100
     ConstraintDescription: You must enter a GitHub username or organization
 
+  VpcCIDR:
+    Type: String
+    Default: "10.0.0.0/16"
+    Description: "CIDR block for the VPC"
+
   DBInstanceID:
     Default: salondbinstance
     Description: Salon database instance
@@ -170,6 +175,10 @@ Metadata:
           default: EKS
         Parameters:
           - EksClusterName
+      - Label:
+          default: VPC
+        Parameters:
+          - VpcCIDR
       - Label:
           default: RdsDB
         Parameters:
@@ -318,12 +327,17 @@ Resources:
                   - cloudwatch:ListMetrics
                   - cloudwatch:DescribeAlarms
 
+  MyVPC:
+    Type: AWS::EC2::VPC
+    Properties:
+      CidrBlock: !Ref VpcCIDR
+  
   # Egress security group from EC2 to RDS DB
   CodeBuildSecurityGroup:
     Type: AWS::EC2::SecurityGroup
     Properties:
       GroupDescription: Security group for CodeBuild EC2 instance. Enable HTTP access via port 5432
-      VpcId: "AWS::VPC::Default"  # Use the default VPC
+      VpcId: !Ref MyVPC  # Reference the VPC created above
       SecurityGroupEgress:
         - IpProtocol: tcp
           FromPort: !Ref DBPort
