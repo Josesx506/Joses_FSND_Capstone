@@ -59,9 +59,9 @@ phases:
       - echo $EKS_CLUSTER_NAME
       - echo $EKS_KUBECTL_ROLE_ARN
       - aws eks update-kubeconfig --name $EKS_CLUSTER_NAME --role-arn $EKS_KUBECTL_ROLE_ARN
-      - echo $RDSMonitoringRoleName
-      - echo $RDS_MONITORING_ROLE_ARN
-      - aws iam add-role-to-instance-profile --instance-profile-name $RDSMonitoringRoleName --role-name $RDS_MONITORING_ROLE_ARN
+      # - echo $RDSMonitoringRoleName
+      # - echo $RDS_MONITORING_ROLE_ARN
+      # - aws iam add-role-to-instance-profile --instance-profile-name $RDSMonitoringRoleName --role-name $RDS_MONITORING_ROLE_ARN
       - kubectl apply -f salon_api.yml 
       - printf '[{"name":"salon_api","imageUri":"%s"}]' $REPOSITORY_URI:$TAG > build.json
 artifacts:
