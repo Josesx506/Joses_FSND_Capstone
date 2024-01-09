@@ -494,6 +494,12 @@ Resources:
                   - ec2:DescribeSecurityGroups
                   - ec2:DescribeVpcs
                   - ec2:CreateNetworkInterfacePermission
+                  - ec2:AuthorizeSecurityGroupEgress
+                  - ec2:AuthorizeSecurityGroupIngress
+                  - ec2:CreateSecurityGroup
+                  - ec2:DescribeInstances
+                  - ec2:ModifyNetworkInterfaceAttribute
+                  - ec2:RevokeSecurityGroupEgress
               - Resource: !Sub arn:aws:s3:::${CodePipelineArtifactBucket}/*
                 Effect: Allow
                 Action:
