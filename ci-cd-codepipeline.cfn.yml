@@ -339,7 +339,7 @@ Resources:
         - IpProtocol: tcp
           FromPort: !Ref DBPort
           ToPort: !Ref DBPort
-          SourceSecurityGroupId: !GetAtt CodeBuildSecurityGroup.Outputs.CodeBuildSecurityGroupId
+          SourceSecurityGroupId: !GetAtt CodeBuildSecurityGroup.GroupId
    
   PSQLDBInstance:
     Type: 'AWS::RDS::DBInstance'
