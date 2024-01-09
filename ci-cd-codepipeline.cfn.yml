@@ -349,6 +349,7 @@ Resources:
     Type: AWS::EC2::SecurityGroup
     Properties:
       GroupDescription: Security group for my PostgreSQL database
+      VpcId: !Ref MyVPC  # Reference the VPC created above
       SecurityGroupIngress:
         - IpProtocol: tcp
           FromPort: !Ref DBPort
