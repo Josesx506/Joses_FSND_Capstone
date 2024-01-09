@@ -339,8 +339,7 @@ Resources:
         - IpProtocol: tcp
           FromPort: !Ref DBPort
           ToPort: !Ref DBPort
-          SourceSecurityGroupName: !GetAtt CodeBuildSecurityGroup.GroupName
-          SourceSecurityGroupId: !GetAtt CodeBuildSecurityGroup.GroupId
+          SourceSecurityGroupId: !GetAtt CodeBuildSecurityGroup.Outputs.CodeBuildSecurityGroupId
    
   PSQLDBInstance:
     Type: 'AWS::RDS::DBInstance'
@@ -558,3 +557,12 @@ Resources:
                 - Name: BuildOutput
               RunOrder: 1
     DependsOn: CodeBuildProject
+
+
+Outputs:
+  CodeBuildSecurityGroupId:
+    Description: "ID of the CodeBuild Security Group"
+    Value: !Ref CodeBuildSecurityGroup
+  CodeBuildSecurityGroupName:
+    Description: "Name of the CodeBuild Security Group"
+    Value: !GetAtt CodeBuildSecurityGroup.GroupName
