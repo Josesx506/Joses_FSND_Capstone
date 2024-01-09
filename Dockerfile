@@ -10,9 +10,9 @@ WORKDIR /src
 RUN pip install --upgrade pip
 RUN pip install -r requirements.txt
 
-RUN flask db init
-RUN flask db migrate
-RUN flask db upgrade
+# RUN flask db init
+# RUN flask db migrate
+# RUN flask db upgrade
 
 # Define an entrypoint which will run the main app using the Gunicorn WSGI server.
 ENTRYPOINT ["gunicorn", "-b", ":8080", "app:app"]
