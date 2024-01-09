@@ -57,7 +57,7 @@ Parameters:
   MyVpcId:
     Type: String
     Description: "ID of the pre-existing VPC."
-    Default: "vpc-01d9888502fa2d135"
+    Default: "vpc-0c834cfe4260d45c4"
 
   DBInstanceID:
     Default: salondbinstance
@@ -344,8 +344,8 @@ Resources:
       DBSubnetGroupName: "MyDBSubnetGroup"
       DBSubnetGroupDescription: "My DB subnet group description"
       SubnetIds:
-        - subnet-09d6c8e9315dffb3f
-        - subnet-0aae149a1a2a4259f
+        - subnet-0c4f4ccc342b1c8ef
+        - subnet-07b580e800e14a8cc
       Tags:
         - Key: "Name"
           Value: "MyDBSubnetGroup"
