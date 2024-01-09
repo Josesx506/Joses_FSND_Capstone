@@ -323,7 +323,7 @@ Resources:
     Type: AWS::EC2::SecurityGroup
     Properties:
       GroupDescription: Security group for CodeBuild EC2 instance. Enable HTTP access via port 5432
-      VpcId: !Ref "AWS::VPC::Default"  # Use the default VPC
+      VpcId: "AWS::VPC::Default"  # Use the default VPC
       SecurityGroupEgress:
         - IpProtocol: tcp
           FromPort: !Ref DBPort
