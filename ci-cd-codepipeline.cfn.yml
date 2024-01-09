@@ -53,6 +53,11 @@ Parameters:
     Type: String
     Default: "10.0.0.0/16"
     Description: "CIDR block for the VPC"
+  
+  MyVpcId:
+    Type: String
+    Description: "ID of the pre-existing VPC."
+    Default: "vpc-024e357006032e3e5"
 
   DBInstanceID:
     Default: salondbinstance
@@ -179,6 +184,7 @@ Metadata:
           default: VPC
         Parameters:
           - VpcCIDR
+          - MyVpcId
       - Label:
           default: RdsDB
         Parameters:
@@ -327,17 +333,29 @@ Resources:
                   - cloudwatch:ListMetrics
                   - cloudwatch:DescribeAlarms
 
-  MyVPC:
-    Type: AWS::EC2::VPC
+  # MyVPC:
+  #   Type: AWS::EC2::VPC
+  #   Properties:
+  #     CidrBlock: !Ref VpcCIDR
+  
+  MyDBSubnetGroup:
+    Type: AWS::RDS::DBSubnetGroup
     Properties:
-      CidrBlock: !Ref VpcCIDR
+      DBSubnetGroupName: "MyDBSubnetGroup"
+      DBSubnetGroupDescription: "My DB subnet group description"
+      SubnetIds:
+        - subnet-0f26666328d598b1a
+        - subnet-05a76fb5dbc955a39
+      Tags:
+        - Key: "Name"
+          Value: "MyDBSubnetGroup"
   
   # Egress security group from EC2 to RDS DB
   CodeBuildSecurityGroup:
     Type: AWS::EC2::SecurityGroup
     Properties:
       GroupDescription: Security group for CodeBuild EC2 instance. Enable HTTP access via port 5432
-      VpcId: !Ref MyVPC  # Reference the VPC created above
+      VpcId: !Ref MyVpcId  # Reference the VPC created above
       SecurityGroupEgress:
         - IpProtocol: tcp
           FromPort: !Ref DBPort
@@ -349,7 +367,7 @@ Resources:
     Type: AWS::EC2::SecurityGroup
     Properties:
       GroupDescription: Security group for my PostgreSQL database
-      VpcId: !Ref MyVPC  # Reference the VPC created above
+      VpcId: !Ref MyVpcId  # Reference the VPC created above
       SecurityGroupIngress:
         - IpProtocol: tcp
           FromPort: !Ref DBPort
@@ -370,7 +388,7 @@ Resources:
       MasterUserPassword: !Ref DBPassword
       MonitoringInterval: 60
       MonitoringRoleArn: !Sub 'arn:aws:iam::${AWS::AccountId}:role/${RDSMonitoringRoleName}'
-      VPCSecurityGroups: MyDBSecurityGroup
+      DBSubnetGroupName: !Ref MyDBSubnetGroup
     DependsOn: RDSMonitoringRole
  
   KubectlAssumeRoleCustomResource:
