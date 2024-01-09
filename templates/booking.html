@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Bookings Page{% endblock %}</title>
+    <!-- Add the evo-calendar.css for styling -->
+    <link rel="stylesheet" type="text/css"
+        href="https://cdn.jsdelivr.net/npm/evo-calendar@1.1.2/evo-calendar/css/evo-calendar.min.css" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/header.css')}}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/booking.css')}}">
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet">
+    <!-- Font awesome icos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+</head>
+
+<body>
+    <header>
+        <nav class="vertical-centerer flex-container">
+            <div class="flex-container space-between header-content">
+                <div>
+                    <span>
+                        <img class="logo" src="{{ url_for('static', filename='images/logo.png')}}" alt="HofE Logo">
+                    </span>
+                </div>
+                <div>
+                    <ul class="menu">
+                        <li><a href="{{ url_for('index')}}">Home</a></li>
+                        <!-- <li><a href="{{ url_for('static', filename='services.html')}}">Services</a></li> -->
+                        <li><a href="{{ url_for('get_bookings')}}">Book Appointment</a></li>
+                        <li><a href="{{ url_for('get_stylists')}}">Stylists</a></li>
+                        <li id="login-button"><a href="{{ url_for('auth.login')}}">Login</a></li>
+                        {% if session.user %}
+                        <li id="logout-button"><a href="{{ url_for('auth.logout')}}">Logout</a></li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    
+    <div id="page-container">
+        <!-- Calendar Div -->
+        <div id="calendar"></div>
+
+        <!-- Pop-up Form to add events -->
+        <div class="popup-container">
+            <form class="bookingForm" action="/appointments/book" method="post">
+                <div class="field-wrap">
+                    <label for="fname">First Name*</label>
+                    <input type="text" id="firstName" name="fname" required autocomplete="off">
+                    <br>
+                    <label for="lname">Last Name *</label>
+                    <input type="text" id="lastName" name="lname" required autocomplete="off">
+                    <br>
+                    <label for="phone">Phone*</label>
+                    <input type="tel" class="bookPhoneNum" name="phone" required autocomplete="on" />
+                    <br>
+                    <label for="email">Email Address*</label>
+                    <input type="email" class="bookEmail" name="email" required autocomplete="on" />
+                    <br>
+                    <label for="dt">Availability*</label>
+                    <!-- <input type="datetime-local" class="bookDateTime" name="dt" required /> -->
+                    <select class="time_availability" name="dt">
+                        <option value="10 AM">10 AM</option>
+                        <option value="11 AM" disabled>11 AM</option>
+                        <option value="12 PM">12 PM</option>
+                    </select>
+                    <br>
+                    <button type="submit" class="submitBooking">Book</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <span id="user-role" style="display: none; top: 50%; left: 50%;">{{ user_role }}</span>
+
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/evo-calendar@1.1.2/evo-calendar/js/evo-calendar.min.js"></script>
+    <script src="{{ url_for('static', filename='scripts/booking.js') }}" defer></script>
+</body>
+
+</html>
