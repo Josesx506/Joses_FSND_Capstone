@@ -42,8 +42,7 @@ phases:
         - echo 'Starting unit tests'
         - pip3 install -r requirements.txt
         - echo $DB_HOST
-        - echo $DB_NAME
-        - echo $DB_PASSWORD
+        - echo $AUTH0_DOMAIN
         # - python -m unittest discover -s tests -p test_*.py
         # - echo 'Migrating Database'
         # - flask db init
@@ -51,11 +50,12 @@ phases:
         # - flask db upgrade
   build:
     commands:
-      - docker build --tag $REPOSITORY_URI:$TAG .
+      # - docker build --tag $REPOSITORY_URI:$TAG .
+      - gunicorn -b :8080 app:app &
 
   post_build:
     commands:
-      - docker push $REPOSITORY_URI:$TAG
+      # - docker push $REPOSITORY_URI:$TAG
       - echo $EKS_CLUSTER_NAME
       - echo $EKS_KUBECTL_ROLE_ARN
       - aws eks update-kubeconfig --name $EKS_CLUSTER_NAME --role-arn $EKS_KUBECTL_ROLE_ARN
