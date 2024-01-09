@@ -4,5 +4,9 @@
         "Effect": "Allow",
         "Action": ["rds:*", "ssm:GetParameters"],
         "Resource":"*"
+    },{
+        "Effect": "Allow",
+        "Action": ["cloudformation:DescribeStacks"],
+        "Resource":"*"
     }]
 }
