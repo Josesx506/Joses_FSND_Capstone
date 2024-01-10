@@ -10,9 +10,9 @@ WORKDIR /src
 RUN pip install --upgrade pip
 RUN pip install -r requirements.txt
 
-RUN flask db init
-RUN flask db migrate
-RUN flask db upgrade
+# RUN flask db init
+# RUN flask db migrate
+# RUN flask db upgrade
 
 # RUN python 01_insert_single_db_entry.py
 
