@@ -14,7 +14,7 @@ RUN flask db init
 RUN flask db migrate
 RUN flask db upgrade
 
-RUN python 01_insert_single_db_entry.py
+# RUN python 01_insert_single_db_entry.py
 
 # Define an entrypoint which will run the main app using the Gunicorn WSGI server.
 ENTRYPOINT ["gunicorn", "-b", ":8080", "app:app"]
