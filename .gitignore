@@ -2,4 +2,6 @@
 .aws_ssm_env
 .DS_Store
 __pycache__
+myenv
+migrations
 flask_app_ec2_rds_db_key_pair.pem

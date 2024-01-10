@@ -5,12 +5,12 @@ import sys
 
 # Setup the python file path to enable importing the system variables
 sys.path.append(os.getcwd())
-from settings import DB_NAME,DB_USER,DB_PASSWORD
+from settings import DB_HOST,DB_NAME,DB_USER,DB_PASSWORD
 
 
 # PostgreSQL was used to create the app locally but sqlite was used to run unittests
 database_filename = DB_NAME
-database_path = f'postgresql://{DB_USER}:{DB_PASSWORD}@localhost:5432/{database_filename}'
+database_path = f'postgresql://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:5432/{database_filename}'
 
 
 db = SQLAlchemy()
