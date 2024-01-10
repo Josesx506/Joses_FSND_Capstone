@@ -233,9 +233,11 @@ def create_app(test_config=None, db_name=db_name):
       # Identify the user id
       user_id = jwt['sub']
 
+      
+
       try:
          if resp['first'] is not None:
-               
+               print(resp)
                # Checks to fix psql and sqllite discrepancy
                if app.config['TESTING']:
                   new_booking=Booking(first_name=resp['first'],
@@ -252,11 +254,12 @@ def create_app(test_config=None, db_name=db_name):
                            last_name=resp['last'],
                            phone=resp['phone'],
                            email=resp['email'],
-                           start_time= f"{datetime.strptime(resp['start_time'], '%m-%d-%Y %I:%M %p')}",
+                           start_time= f"{datetime.strptime(resp['date_time'], '%m-%d-%Y %I:%M %p')}",
                            completed=False,
-                           user_id=user_id,
-                           stylist_id=None)
-                  
+                           stylist_id=None,
+                           user_id=user_id)
+               
+               
                new_booking.insert()
 
                # Extract the last drink from the db
@@ -524,4 +527,4 @@ def create_app(test_config=None, db_name=db_name):
 app: Flask = create_app()
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=8080, debug=True)
+    app.run(host='0.0.0.0', port=2020, debug=True)
